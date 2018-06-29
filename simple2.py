@@ -6,16 +6,22 @@ class Simple2(Gtk.Window):
 
     def __init__(self):
         Gtk.Window.__init__(self, title="Welcome to The Machine")
+
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
         self.add(vbox)
+
         self.progressbar = Gtk.ProgressBar()
         vbox.pack_start(self.progressbar, True, True, 0)
+
         image = Gtk.Image.new_from_file('puffy.jpg')
         vbox.add(image)
+
         self.timeout_id = GObject.timeout_add(50, self.on_timeout, None)
         self.activity_mode = False
-        label1 = Gtk.Label("This is a normal label")
-        vbox.add(label1)
+
+        self.label1 = Gtk.Label("This is a normal label")
+        vbox.add(self.label1)
+
         button1 = Gtk.Button("Choose File")
         button1.connect("clicked", self.on_file_clicked)
         vbox.add(button1)
@@ -41,6 +47,7 @@ class Simple2(Gtk.Window):
         if response == Gtk.ResponseType.OK:
             print("Open clicked")
             print("File selected: " + dialog.get_filename())
+            self.label1.set_text(dialog.get_filename())
         elif response == Gtk.ResponseType.CANCEL:
             print("Cancel clicked")
         dialog.destroy()
