@@ -19,22 +19,30 @@ class Simple2(Gtk.Window):
         self.timeout_id = GObject.timeout_add(50, self.on_timeout, None)
         self.activity_mode = False
 
-        self.label1 = Gtk.Label("This is a normal label")
+        self.label1 = Gtk.Label("<no file selected>")
         vbox.add(self.label1)
 
         button1 = Gtk.Button("Choose File")
         button1.connect("clicked", self.on_file_clicked)
         vbox.add(button1)
+
+        self.forward = True
         
     def on_timeout(self, user_data):
         if self.activity_mode:
             self.progressbar.pulse()
         else:
-            new_value = self.progressbar.get_fraction() + 0.01
+            new_value = self.progressbar.get_fraction() + 0.005
             if new_value > 1:
                 new_value = 0
-            self.progressbar.pulse()
-            #self.progressbar.set_fraction(new_value)
+                if self.forward:
+                    self.progressbar.set_inverted(True)
+                    self.forward = False
+                else:
+                    self.progressbar.set_inverted(False)
+                    self.forward = True
+            #self.progressbar.pulse()
+            self.progressbar.set_fraction(new_value)
         return True
 
     def on_file_clicked(self, data):
