@@ -26,7 +26,7 @@ class Simple2(Gtk.Window):
         button1.connect("clicked", self.on_file_clicked)
         vbox.add(button1)
 
-        self.t = 0.005
+        self.t = 0.0005
         self.forward = True
         
     def on_timeout(self, user_data):
@@ -35,7 +35,7 @@ class Simple2(Gtk.Window):
         else:
             new_value = self.progressbar.get_fraction() + self.t
             if new_value > 1:
-                self.t = -0.005
+                self.t = -0.0005
                 if self.forward:
                     self.progressbar.set_inverted(True)
                     self.forward = False
@@ -43,7 +43,7 @@ class Simple2(Gtk.Window):
                     self.progressbar.set_inverted(False)
                     self.forward = True
             if new_value < 0:
-                self.t = 0.005
+                self.t = 0.0005
             #self.progressbar.pulse()
             self.progressbar.set_fraction(new_value)
         return True
