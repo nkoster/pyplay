@@ -16,7 +16,7 @@ class Simple2(Gtk.Window):
         image = Gtk.Image.new_from_file('puffy.jpg')
         vbox.add(image)
 
-        self.timeout_id = GObject.timeout_add(50, self.on_timeout, None)
+        self.timeout_id = GObject.timeout_add(5, self.on_timeout, None)
         self.activity_mode = False
 
         self.label1 = Gtk.Label("<no file selected>")
@@ -26,21 +26,24 @@ class Simple2(Gtk.Window):
         button1.connect("clicked", self.on_file_clicked)
         vbox.add(button1)
 
+        self.t = 0.005
         self.forward = True
         
     def on_timeout(self, user_data):
         if self.activity_mode:
             self.progressbar.pulse()
         else:
-            new_value = self.progressbar.get_fraction() + 0.005
+            new_value = self.progressbar.get_fraction() + self.t
             if new_value > 1:
-                new_value = 0
+                self.t = -0.005
                 if self.forward:
                     self.progressbar.set_inverted(True)
                     self.forward = False
                 else:
                     self.progressbar.set_inverted(False)
                     self.forward = True
+            if new_value < 0:
+                self.t = 0.005
             #self.progressbar.pulse()
             self.progressbar.set_fraction(new_value)
         return True
