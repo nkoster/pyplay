@@ -13,6 +13,7 @@ class MainWindow(Gtk.Window):
         header_bar = Gtk.HeaderBar()
         header_bar.set_show_close_button(True)
         header_bar.props.title = "Some Stuff"
+        self.set_titlebar(header_bar)
 
         audio_button = Gtk.Button()
         cd_icon = Gio.ThemedIcon(name="gnome-dev-cdrom-audio")
@@ -32,7 +33,7 @@ class MainWindow(Gtk.Window):
         box.add(right_arrow)
 
         header_bar.pack_start(box)
-        self.add(header_bar)
+        self.add(Gtk.TextView())
 
 
 win = MainWindow()
