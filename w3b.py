@@ -30,6 +30,6 @@ def isInt(s):
 if len(sys.argv) > 1:
     arg = sys.argv[1]
     if isInt(arg):
-        print 'string =', numToAlpha(arg)
+        print('string = %s' % numToAlpha(arg))
     else:
-        print 'number =', alphaToNum(arg)
+        print('number = %s' % alphaToNum(arg))
