@@ -21,15 +21,16 @@
 # }
 
 import math
+import sys
 
 alpha = "dn6ksvwg8aqht5jmzl7crxe4y9ip2b3o10uf"
 
 def numToAlpha(num):
     r = ""
-    n = int(math.floor(num / len(alpha)))
+    n = int(math.floor(int(num) / len(alpha)))
     if n > 0:
         r += numToAlpha(n)
-    r += alpha[num % len(alpha)]
+    r += alpha[int(num) % len(alpha)]
     return r
 
 def alphaToNum(s):
@@ -41,6 +42,16 @@ def alphaToNum(s):
         r += alpha.find(s[i]) * pow(len(alpha), i)
     return int(r)
 
-print '103454 = ', numToAlpha(103454)
+def isInt(s):
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False
 
-print '6gbi =', alphaToNum('6gbi')
+if len(sys.argv) > 1:
+    arg = sys.argv[1]
+    if isInt(arg):
+        print 'string =', numToAlpha(arg)
+    else:
+        print 'number =', alphaToNum(arg)
